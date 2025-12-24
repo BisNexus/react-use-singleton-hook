@@ -1,36 +1,36 @@
-// src/singletonHook.ts
+// TypeScript
+// 'src/singletonHook.ts'
 import React, { useEffect } from "react";
 import { createStore } from "zustand/vanilla";
 import { useStore } from "zustand";
 import { createRoot, type Root } from "react-dom/client";
 
 type Options = {
-  mountId?: string; // optional id for the hidden mount node
+  mountId?: string;
+  unmountIfNoConsumers?: boolean;
 };
 
-/**
- * Creates a singleton hook backed by Zustand.
- * - initValue: initial value returned before the hook body computes anything
- * - useHookBody: a hook that computes the shared value (runs once globally)
- * - options: optional mount config
- *
- * Returns a hook that reads the shared value.
- */
 export function singletonHook<T>(
-  initValue: T,
+  initValue: T | (() => T),
   useHookBody: () => T,
   options: Options = {},
 ): () => T {
-  // Shared store (per singletonHook call)
   type Slice = { value: T };
-  const store = createStore<Slice>(() => ({ value: initValue }));
 
-  // Hidden runner lifetime management
+  const { mountId, unmountIfNoConsumers = true } = options;
+
+  const hasLazyInit = typeof initValue === "function";
+  let initResolved = !hasLazyInit;
+  let resolvedInit: T = hasLazyInit
+    ? (undefined as unknown as T)
+    : (initValue as T);
+
+  const store = createStore<Slice>(() => ({ value: resolvedInit }));
+
   let consumers = 0;
   let root: Root | null = null;
   let host: HTMLElement | null = null;
 
-  // Hidden component that runs the provided hook body and pushes updates to the store
   function HiddenRunner() {
     const val = useHookBody();
     useEffect(() => {
@@ -43,7 +43,7 @@ export function singletonHook<T>(
     if (root) return;
     host = document.createElement("div");
     host.style.display = "none";
-    if (options.mountId) host.id = options.mountId;
+    if (mountId) host.id = mountId;
     document.body.appendChild(host);
     root = createRoot(host);
     root.render(React.createElement(HiddenRunner));
@@ -57,20 +57,26 @@ export function singletonHook<T>(
     host = null;
   }
 
-  // The hook exposed to consumers
+  function resolveInitIfNeeded() {
+    if (!initResolved && hasLazyInit) {
+      initResolved = true;
+      resolvedInit = (initValue as () => T)();
+      store.setState({ value: resolvedInit });
+    }
+  }
+
   function useSingleton(): T {
+    resolveInitIfNeeded();
+
     const value = useStore(store, (s) => s.value);
 
     useEffect(() => {
       consumers += 1;
-      // Safe for SSR: only runs on the client
       if (consumers === 1) mountRunner();
-
       return () => {
         consumers -= 1;
-        if (consumers === 0) unmountRunner();
+        if (consumers === 0 && unmountIfNoConsumers) unmountRunner();
       };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return value;
