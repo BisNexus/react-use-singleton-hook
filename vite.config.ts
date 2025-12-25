@@ -15,7 +15,9 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, "src/main.ts"),
+      name: "ReactUseSingletonHook",
       formats: ["es"],
+      fileName: () => "main.js",
     },
     rollupOptions: {
       external: ["react", "react-dom", "react/jsx-runtime"],

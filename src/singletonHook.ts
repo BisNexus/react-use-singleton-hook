@@ -8,7 +8,7 @@ type Options = {
   unmountIfNoConsumers?: boolean;
 };
 
-export function singletonHook<T>(
+export default function singletonHook<T>(
   initValue: T | (() => T),
   useHookBody: () => T,
   options: Options = {},
