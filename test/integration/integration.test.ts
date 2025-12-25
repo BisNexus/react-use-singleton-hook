@@ -31,14 +31,14 @@ describe("singletonHook", () => {
 
   it("does not recalculate the state", () => {
     let counter = 0;
-    const useHook = singletonHook<any>(
+    const useHook = singletonHook<number | string>(
       () => counter++,
       () => {
         return "xxx";
       },
     );
 
-    const messages = [];
+    const messages: (number | string)[] = [];
     const Tmp = () => {
       const message = useHook();
       useEffect(() => {
@@ -95,8 +95,8 @@ describe("singletonHook", () => {
       return useMemo(() => ({ b: "y" }), []);
     });
 
-    const messages1 = [];
-    const messages2 = [];
+    const messages1: Record<string, number>[] = [];
+    const messages2: Record<string, string>[] = [];
     const Tmp = () => {
       const message1 = useHook1();
       const message2 = useHook2();
@@ -123,7 +123,7 @@ describe("singletonHook", () => {
       return state;
     });
 
-    const messages = [];
+    const messages: string[] = [];
     const Tmp = () => {
       const message = useHook();
       useEffect(() => {
@@ -156,7 +156,7 @@ describe("singletonHook", () => {
     );
 
     const Tmp = () => {
-      const _ = useHook();
+      useHook();
       return null;
     };
 

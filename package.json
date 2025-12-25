@@ -1,6 +1,6 @@
 {
   "name": "react-use-singleton-hook",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "main": "dist/main.js",
   "module": "dist/main.js",
@@ -26,7 +26,7 @@
   "repository": "github:LegacyOfKain/react-use-singleton-hook",
   "bugs": "https://github.com/LegacyOfKain/react-use-singleton-hook/issues",
   "scripts": {
-    "build": "vite build && tsc",
+    "build": "vite build",
     "lint": "eslint .",
     "test": "vitest",
     "test:ui": "vitest --ui",
@@ -54,6 +54,7 @@
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
     "vite": "^7.2.4",
+    "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.0.16"
   }
 }
