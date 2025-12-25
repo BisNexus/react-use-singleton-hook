@@ -1,5 +1,3 @@
-// TypeScript
-// 'src/singletonHook.ts'
 import React, { useEffect } from "react";
 import { createStore } from "zustand/vanilla";
 import { useStore } from "zustand";

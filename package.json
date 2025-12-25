@@ -6,6 +6,7 @@
     "react",
     "hooks"
   ],
+  "private": false,
   "license": "MIT",
   "author": "Priyanku Biswas (https://github.com/LegacyOfKain)",
   "homepage": "https://github.com/LegacyOfKain/react-use-singleton-hook",
