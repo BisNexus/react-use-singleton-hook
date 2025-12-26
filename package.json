@@ -1,6 +1,6 @@
 {
   "name": "react-use-singleton-hook",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "type": "module",
   "main": "dist/main.js",
   "module": "dist/main.js",
@@ -21,10 +21,10 @@
   ],
   "private": false,
   "license": "MIT",
-  "author": "Priyanku Biswas (https://github.com/LegacyOfKain)",
-  "homepage": "https://github.com/LegacyOfKain/react-use-singleton-hook",
-  "repository": "github:LegacyOfKain/react-use-singleton-hook",
-  "bugs": "https://github.com/LegacyOfKain/react-use-singleton-hook/issues",
+  "author": "Priyanku Biswas (https://github.com/BisNexus)",
+  "homepage": "https://github.com/BisNexus/react-use-singleton-hook",
+  "repository": "github:BisNexus/react-use-singleton-hook",
+  "bugs": "https://github.com/BisNexus/react-use-singleton-hook/issues",
   "scripts": {
     "build": "vite build",
     "lint": "eslint .",

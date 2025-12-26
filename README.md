@@ -1,2 +1,2 @@
 # React useSingleton hook
-This repository demonstrates how to implement a singleton pattern in a React application using Zustand for state management. The singleton pattern ensures that a class has only one instance and provides a global point of access to it.
+This repository demonstrates how to implement a singleton pattern in a React application using state management. The singleton pattern ensures that a class has only one instance and provides a global point of access to it.
