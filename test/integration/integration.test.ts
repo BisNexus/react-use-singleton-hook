@@ -136,8 +136,7 @@ describe("singletonHook", () => {
     expect(messages).toEqual(["initVal", "newVal"]);
   });
 
-  // TypeScript
-  it("unmounts hook if no consumers", () => {
+  it("unmounts hook if no consumers", async () => {
     let mounts = 0;
     let unmounts = 0;
 
@@ -178,6 +177,10 @@ describe("singletonHook", () => {
 
     // Remove all consumers; runner should unmount once
     rerender(null);
-    expect(unmounts).toBe(1);
+
+    // Wait for queueMicrotask to complete
+    await rtl.waitFor(() => {
+      expect(unmounts).toBe(1);
+    });
   });
 });

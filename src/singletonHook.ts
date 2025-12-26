@@ -39,7 +39,19 @@ export const singletonHook = <T>(
   }
 
   function mountRunner() {
-    if (root) return;
+    if (root) {
+      // Verify the host is still in DOM
+      if (host && document.body.contains(host)) return;
+      // Clean up stale root before resetting
+      try {
+        root.unmount();
+      } catch {
+        /* already unmounted */
+      }
+      // Stale reference, reset
+      root = null;
+      host = null;
+    } // Prevents double-mount ✓
     host = document.createElement("div");
     host.style.display = "none";
     if (mountId) host.id = mountId;
@@ -52,7 +64,8 @@ export const singletonHook = <T>(
     if (!root || !host) return;
     // Defer unmount to avoid race condition during React render
     queueMicrotask(() => {
-      if (!root || !host) return;
+      // Re-check guards after defer and Re-check consumers count to handle late subscriptions
+      if (!root || !host || consumers > 0) return;
       root.unmount();
       host.remove();
       root = null;
@@ -77,7 +90,7 @@ export const singletonHook = <T>(
 
     useEffect(() => {
       consumers += 1;
-      if (consumers === 1) mountRunner();
+      if (!root) mountRunner(); // Mount if not already mounted
       return () => {
         consumers -= 1;
         if (consumers === 0 && unmountIfNoConsumers) unmountRunner();
