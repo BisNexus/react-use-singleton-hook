@@ -1,9 +1,10 @@
 import { singletonHook } from "./singletonHook";
 
-export { singletonHook as useSingletonGlobalState };
+export { singletonHook as createSingletonGlobalState };
 
 const ReactSingletonHook = {
-  useSingletonGlobalState: singletonHook,
+  //This Generic Arrow Function is creating a hook, not calling one, so naming convention should not have use prefix
+  createSingletonGlobalState: singletonHook,
 };
 
 export default ReactSingletonHook;

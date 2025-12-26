@@ -8,11 +8,12 @@ type Options = {
   unmountIfNoConsumers?: boolean;
 };
 
-export function singletonHook<T>(
+//This Generic Arrow Function is creating a hook, not calling one, so naming convention should not have use prefix
+export const singletonHook = <T>(
   initValue: T | (() => T),
   useHookBody: () => T,
   options: Options = {},
-): () => T {
+): (() => T) => {
   type Slice = { value: T };
 
   const { mountId, unmountIfNoConsumers = true } = options;
@@ -63,6 +64,8 @@ export function singletonHook<T>(
     }
   }
 
+  // useSingleton is the actual hook that gets returned and used by consumers.
+  // React's rules-of-hooks linter recognizes function declarations with use prefix as valid hooks
   function useSingleton(): T {
     resolveInitIfNeeded();
 
@@ -81,4 +84,4 @@ export function singletonHook<T>(
   }
 
   return useSingleton;
-}
+};
