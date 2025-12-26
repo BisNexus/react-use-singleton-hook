@@ -50,10 +50,14 @@ export const singletonHook = <T>(
 
   function unmountRunner() {
     if (!root || !host) return;
-    root.unmount();
-    host.remove();
-    root = null;
-    host = null;
+    // Defer unmount to avoid race condition during React render
+    queueMicrotask(() => {
+      if (!root || !host) return;
+      root.unmount();
+      host.remove();
+      root = null;
+      host = null;
+    });
   }
 
   function resolveInitIfNeeded() {
