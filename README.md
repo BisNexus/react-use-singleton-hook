@@ -3,6 +3,8 @@ Manage global state of your React app using hooks.
 
 [![build status](https://github.com/BisNexus/react-use-singleton-hook/actions/workflows/ci.yml/badge.svg)](https://github.com/LegacyOfKain/react-use-singleton-hook/actions)
 [![npm version](https://img.shields.io/npm/v/react-use-singleton-hook)](https://www.npmjs.com/package/react-use-singleton-hook)
+[![npm downloads](https://img.shields.io/npm/dm/react-use-singleton-hook)](https://www.npmjs.com/package/react-use-singleton-hook)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![GitHub last commit](https://img.shields.io/github/last-commit/BisNexus/react-use-singleton-hook)
 
 ## Installation
