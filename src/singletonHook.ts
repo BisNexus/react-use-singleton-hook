@@ -8,7 +8,7 @@ type Options = {
   unmountIfNoConsumers?: boolean;
 };
 
-//This Generic Arrow Function is creating a hook, not calling one, so naming convention should not have use prefix
+//This Generic Arrow Function is creating a hook, not calling one, so naming convention should not have "use" prefix
 export const singletonHook = <T>(
   initValue: T | (() => T),
   useHookBody: () => T,
